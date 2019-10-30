@@ -4,10 +4,6 @@ library(readxl)
 contrib_all <- read_xlsx("Top MA Donors 2016-2020.xlsx", sheet = "Direct Contributions & JFC Dist")
 JFC <- read_xlsx("Top MA Donors 2016-2020.xlsx", sheet = "JFC Contributions (DO NOT SUM W")
 
-## Remove NA
-#contrib_all <- na.omit(contrib_all)
-View(contrib_all)
-
 # Second Normal Form
 contributiors <- select(contrib_all, contribid, fam, contrib, City, State, Zip, Fecoccemp, orgname)
 orgs <- select(contrib_all, orgname, ultorg)
