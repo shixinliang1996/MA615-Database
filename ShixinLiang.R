@@ -8,7 +8,6 @@ JFC <- read_xlsx("Top MA Donors 2016-2020.xlsx", sheet = "JFC Contributions (DO 
 #contrib_all <- na.omit(contrib_all)
 View(contrib_all)
 
-
 # Second Normal Form
 contributiors <- select(contrib_all, contribid, fam, contrib, City, State, Zip, Fecoccemp, orgname)
 orgs <- select(contrib_all, orgname, ultorg)
@@ -25,7 +24,8 @@ dates <- select(contrib_all, date, cycle)
 recipients <- select(contrib_all, recipient, recipid, recipcode, cmteid)
 
 # Fourth Normal Form
-contributiors <- select(contrib_all, contribid, fam, contrib)
+contributiors <- select(contrib_all, contribid, contrib)
+family <- select(contrib_all, contrib, fam)
 employer <- select(contrib_all, contribid, Fecoccemp)
 organization <- select(contrib_all, contribid, orgname)
 zipcode <- select(contrib_all, contribid, Zip)
@@ -36,8 +36,9 @@ contribution <- select(contrib_all, fectransid, contribid, date, amount, type, r
 dates <- select(contrib_all, date, cycle)
 recipients <- select(contrib_all, recipient, recipid, recipcode, cmteid)
 
-# Eliminate duplicative rowa
+# Eliminate duplicative rows
 contributiors <- base::unique(contributiors) 
+family <- base::unique(family) 
 employer <- base::unique(employer) 
 organization <- base::unique(organization) 
 zipcode <- base::unique(zipcode) 
@@ -48,5 +49,10 @@ contribution <- base::unique(contribution)
 dates <- base::unique(dates) 
 recipients <- base::unique(recipients) 
 
+# fix weird value and remove NA
+family <- na.omit(family)
+organization <- na.omit(organization)
+orgs <- na.omit(orgs)
+employer <- filter(employer , employer$Fecoccemp != "." )
 
 
